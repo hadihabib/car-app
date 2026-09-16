@@ -1,0 +1,17 @@
+{
+  "project": "shop_dashboard",
+  "screens": [
+    "login",
+    "home",
+    "sales",
+    "traders",
+    "reports"
+  ],
+  "sales_write": false,
+  "trader_movements": [
+    "invoice_from_him",
+    "i_paid_for_him",
+    "he_paid_for_me"
+  ],
+  "auth": "supabase email/password"
+}
