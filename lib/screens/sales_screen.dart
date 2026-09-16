@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -162,7 +163,7 @@ class _TransactionCard extends StatelessWidget {
           isScrollControlled: true,
           backgroundColor: Colors.white,
           builder: (_) => Directionality(
-            textDirection: TextDirection.rtl,
+            textDirection: ui.TextDirection.rtl,
             child: _TransactionDetails(
               row: row,
               remaining: remaining,

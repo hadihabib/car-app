@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -119,7 +120,7 @@ class _TradersScreenState extends State<TradersScreen> {
                                 isScrollControlled: true,
                                 backgroundColor: Colors.white,
                                 builder: (_) => Directionality(
-                                  textDirection: TextDirection.rtl,
+                                  textDirection: ui.TextDirection.rtl,
                                   child: AddTraderMovementSheet(
                                     merchants: data.merchants,
                                   ),
@@ -140,7 +141,7 @@ class _TradersScreenState extends State<TradersScreen> {
                       final changed = await showDialog<bool>(
                         context: context,
                         builder: (_) => Directionality(
-                          textDirection: TextDirection.rtl,
+                          textDirection: ui.TextDirection.rtl,
                           child: const AddMerchantDialog(),
                         ),
                       );
@@ -227,7 +228,7 @@ class _TradersScreenState extends State<TradersScreen> {
                           final changed = await Navigator.of(context).push<bool>(
                             MaterialPageRoute(
                               builder: (_) => Directionality(
-                                textDirection: TextDirection.rtl,
+                                textDirection: ui.TextDirection.rtl,
                                 child: TraderDetailsScreen(
                                   merchant: merchant,
                                   ledger: entries,
@@ -712,15 +713,15 @@ class _TraderDetailsScreenState extends State<TraderDetailsScreen> {
                         final action = await showModalBottomSheet<String>(
                           context: context,
                           backgroundColor: Colors.white,
-                          builder: (_) => Directionality(
-                            textDirection: TextDirection.rtl,
+                          builder: (sheetContext) => Directionality(
+                            textDirection: ui.TextDirection.rtl,
                             child: SafeArea(
                               child: Wrap(
                                 children: [
                                   ListTile(
                                     leading: const Icon(Icons.edit_outlined),
                                     title: const Text('تعديل'),
-                                    onTap: () => Navigator.pop(_, 'edit'),
+                                    onTap: () => Navigator.pop(sheetContext, 'edit'),
                                   ),
                                   ListTile(
                                     leading: const Icon(
@@ -731,7 +732,7 @@ class _TraderDetailsScreenState extends State<TraderDetailsScreen> {
                                       'حذف',
                                       style: TextStyle(color: AppColors.pink),
                                     ),
-                                    onTap: () => Navigator.pop(_, 'delete'),
+                                    onTap: () => Navigator.pop(sheetContext, 'delete'),
                                   ),
                                 ],
                               ),
@@ -744,18 +745,18 @@ class _TraderDetailsScreenState extends State<TraderDetailsScreen> {
                         if (action == 'delete') {
                           final yes = await showDialog<bool>(
                             context: context,
-                            builder: (_) => AlertDialog(
+                            builder: (dialogContext) => AlertDialog(
                               title: const Text('حذف الحركة؟'),
                               content: const Text(
                                 'سيتم حذف الحركة من حساب التاجر.',
                               ),
                               actions: [
                                 TextButton(
-                                  onPressed: () => Navigator.pop(_, false),
+                                  onPressed: () => Navigator.pop(dialogContext, false),
                                   child: const Text('إلغاء'),
                                 ),
                                 FilledButton(
-                                  onPressed: () => Navigator.pop(_, true),
+                                  onPressed: () => Navigator.pop(dialogContext, true),
                                   child: const Text('حذف'),
                                 ),
                               ],
@@ -778,7 +779,7 @@ class _TraderDetailsScreenState extends State<TraderDetailsScreen> {
                             isScrollControlled: true,
                             backgroundColor: Colors.white,
                             builder: (_) => Directionality(
-                              textDirection: TextDirection.rtl,
+                              textDirection: ui.TextDirection.rtl,
                               child: AddTraderMovementSheet(
                                 merchants: [widget.merchant],
                                 existing: row,
