@@ -1,0 +1,41 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Create Android platform files
+        run: flutter create . --platforms android
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build release APK
+        env:
+          APP_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          APP_SUPABASE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+        run: >
+          flutter build apk --release
+          --dart-define=SUPABASE_URL="$APP_SUPABASE_URL"
+          --dart-define=SUPABASE_PUBLISHABLE_KEY="$APP_SUPABASE_KEY"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: shop-dashboard-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+          retention-days: 30
